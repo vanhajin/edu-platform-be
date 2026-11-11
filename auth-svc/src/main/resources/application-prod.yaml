@@ -1,0 +1,14 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+
+eduplatform:
+  datasource:
+    url: ${EDUPLATFORM_DB_URL}
+    username: ${EDUPLATFORM_DB_USERNAME}
+    password: ${EDUPLATFORM_DB_PASSWORD}

@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: auth-svc
+
+server:
+  port: 45900
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+logging:
+  level:
+    org.hibernate.orm.connections.pooling: warn

@@ -1,0 +1,13 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: auth-svc
+              uri: http://localhost:45900
+              predicates:
+                - Path=/auth/**

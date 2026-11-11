@@ -1,0 +1,14 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+
+eduplatform:
+  datasource:
+    url: ${EDUPLATFORM_DB_URL:jdbc:mysql://localhost:3306/edu_platform}
+    username: ${EDUPLATFORM_DB_USERNAME:root}
+    password: ${EDUPLATFORM_DB_PASSWORD:A123456}

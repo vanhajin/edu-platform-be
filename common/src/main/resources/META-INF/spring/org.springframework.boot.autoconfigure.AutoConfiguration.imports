@@ -1,0 +1,2 @@
+com.eduplatform.common.datasource.EduplatformDataSourceAutoConfiguration
+com.eduplatform.common.exceptions.CommonWebAutoConfiguration
