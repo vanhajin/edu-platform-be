@@ -4,7 +4,7 @@ import com.eduplatform.common.dtos.web.ReponseUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.store.authsvc.dtos.request.RegistorRequestDTO;
+import org.store.authsvc.dtos.request.RegisterRequestDTO;
 import org.store.authsvc.services.AuthService;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +18,7 @@ class AuthControllerTest {
     void registersStudentAndReturnsCreatedResponse() {
         AuthService authService = mock(AuthService.class);
         AuthController controller = new AuthController(authService);
-        RegistorRequestDTO request = new RegistorRequestDTO(
+        RegisterRequestDTO request = new RegisterRequestDTO(
                 "VanNT_Buyer", "nguyenthivanhs98@gmail.com", "A123456", "A123456",
                 "Nguyễn Thị Vân", "STUDENT", "1998", "Hải Dương"
         );

@@ -3,9 +3,6 @@ package org.store.authsvc.dtos.request;
 import com.eduplatform.common.utils.enums.EnumRole;
 import com.eduplatform.common.utils.validation.CommonValid;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegistorRequestDTO {
+public class RegisterRequestDTO {
 
     @CommonValid(fieldName = "Tên đăng nhập", notNull = true, regex = "^[A-Za-z0-9_]+$", max = 50)
     private String username;
@@ -27,10 +24,6 @@ public class RegistorRequestDTO {
 
     @CommonValid(fieldName = "Tên hiển thị", notNull = true, max = 200)
     private String displayName;
-
-
-    
-
 
     private String role = EnumRole.STUDENT.getCode();
 

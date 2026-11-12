@@ -1,14 +1,13 @@
 package org.store.authsvc.services;
 
 import com.eduplatform.common.entites.UsersEntity;
-import com.eduplatform.common.dtos.web.ReponseUtil;
 import com.eduplatform.common.exceptions.BaseException;
 import com.eduplatform.common.utils.enums.EnumRole;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.store.authsvc.dtos.request.RegistorRequestDTO;
+import org.store.authsvc.dtos.request.RegisterRequestDTO;
 import org.store.authsvc.mappers.UserMapper;
 import org.store.authsvc.repositories.UserRepository;
 
@@ -23,7 +22,7 @@ public class AuthService {
 
     @Transactional
     @SneakyThrows
-    public void registerStudent(RegistorRequestDTO request) {
+    public void registerStudent(RegisterRequestDTO request) {
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new BaseException("USERNAME_ALREADY_EXISTS", "Username already exists");
         }

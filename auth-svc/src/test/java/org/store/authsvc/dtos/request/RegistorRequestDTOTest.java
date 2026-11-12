@@ -18,7 +18,7 @@ class RegistorRequestDTOTest {
 
     @Test
     void acceptsAValidRegistrationRequest() {
-        RegistorRequestDTO request = new RegistorRequestDTO(
+        RegisterRequestDTO request = new RegisterRequestDTO(
                 "VanNT_Buyer",
                 "nguyenthivanhs98@gmail.com",
                 "A123456",
@@ -34,7 +34,7 @@ class RegistorRequestDTOTest {
 
     @Test
     void rejectsBlankFieldsAndInvalidFormats() {
-        RegistorRequestDTO request = new RegistorRequestDTO(
+        RegisterRequestDTO request = new RegisterRequestDTO(
                 "Van NT!",
                 "not-an-email",
                 "",

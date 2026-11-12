@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.store.authsvc.dtos.request.RegistorRequestDTO;
+import org.store.authsvc.dtos.request.RegisterRequestDTO;
 import org.store.authsvc.services.AuthService;
 
 @RestController
@@ -19,7 +19,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register-student")
-    public ResponseEntity<ReponseUtil<Void>> registerStudent(@Valid @RequestBody RegistorRequestDTO request) {
+    public ResponseEntity<ReponseUtil<Void>> registerStudent(@Valid @RequestBody RegisterRequestDTO request) {
         authService.registerStudent(request);
         return ResponseEntity.status(HttpStatus.OK).body(ReponseUtil.success());
     }

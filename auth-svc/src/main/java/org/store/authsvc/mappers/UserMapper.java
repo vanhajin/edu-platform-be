@@ -3,7 +3,7 @@ package org.store.authsvc.mappers;
 import com.eduplatform.common.entites.UsersEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.store.authsvc.dtos.request.RegistorRequestDTO;
+import org.store.authsvc.dtos.request.RegisterRequestDTO;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
@@ -15,5 +15,5 @@ public interface UserMapper {
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "updatedBy", ignore = true)
     @Mapping(target = "updatedDate", ignore = true)
-    UsersEntity toEntity(RegistorRequestDTO request);
+    UsersEntity toEntity(RegisterRequestDTO request);
 }

@@ -8,7 +8,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.store.authsvc.dtos.request.RegistorRequestDTO;
+import org.store.authsvc.dtos.request.RegisterRequestDTO;
 import org.store.authsvc.mappers.UserMapper;
 import org.store.authsvc.repositories.UserRepository;
 
@@ -33,7 +33,7 @@ class AuthServiceTest {
 
     @Test
     void registersUserWithAnEncodedPassword() {
-        RegistorRequestDTO request = validRequest();
+        RegisterRequestDTO request = validRequest();
         UsersEntity mappedUser = UsersEntity.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
@@ -60,7 +60,7 @@ class AuthServiceTest {
 
     @Test
     void rejectsDifferentPasswordConfirmation() {
-        RegistorRequestDTO request = validRequest();
+        RegisterRequestDTO request = validRequest();
         request.setConfirmPassword("a123456");
 
         assertThatThrownBy(() -> authService.registerUser(request))
@@ -72,7 +72,7 @@ class AuthServiceTest {
 
     @Test
     void rejectsAnExistingUsername() {
-        RegistorRequestDTO request = validRequest();
+        RegisterRequestDTO request = validRequest();
         when(userRepository.existsByUsername(request.getUsername())).thenReturn(true);
 
         assertThatThrownBy(() -> authService.registerUser(request))
@@ -86,7 +86,7 @@ class AuthServiceTest {
 
     @Test
     void rejectsAnExistingEmail() {
-        RegistorRequestDTO request = validRequest();
+        RegisterRequestDTO request = validRequest();
         when(userRepository.existsByEmail(request.getEmail())).thenReturn(true);
 
         assertThatThrownBy(() -> authService.registerUser(request))
@@ -99,8 +99,8 @@ class AuthServiceTest {
         verifyNoInteractions(passwordService);
     }
 
-    private RegistorRequestDTO validRequest() {
-        return new RegistorRequestDTO(
+    private RegisterRequestDTO validRequest() {
+        return new RegisterRequestDTO(
                 "VanNT_Buyer", "nguyenthivanhs98@gmail.com", "A123456", "A123456",
                 "Nguyễn Thị Vân", "STUDENT", "1998", "Hải Dương"
         );
