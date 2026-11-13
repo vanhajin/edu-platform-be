@@ -7,10 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserInfoResponseDTO {
+public class UserInfoResponseDTO implements IUserInfoDTO {
 
     private String userId;
     private String username;
     private String displayName;
+    private String email;
     private String role;
 }

@@ -1,6 +1,19 @@
 spring:
   application:
     name: auth-svc
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: Asia/Ho_Chi_Minh
+  jackson:
+    time-zone: Asia/Ho_Chi_Minh
+
+auth:
+  jwt:
+    secret: ${JWT_SECRET}
+    access-token-expiration-seconds: 900
+    refresh-token-expiration-days: 30
 
 server:
   port: 45900

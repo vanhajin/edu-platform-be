@@ -1,6 +1,7 @@
 package org.store.authsvc.controllers;
 
 import com.eduplatform.common.dtos.web.ReponseUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.store.authsvc.dtos.request.RegisterRequestDTO;
+import org.store.authsvc.dtos.request.LoginRequestDTO;
+import org.store.authsvc.dtos.request.RefreshTokenRequestDTO;
+import org.store.authsvc.dtos.response.LoginResponseDTO;
 import org.store.authsvc.services.AuthService;
 
 @RestController
@@ -22,5 +26,21 @@ public class AuthController {
     public ResponseEntity<ReponseUtil<Void>> registerStudent(@Valid @RequestBody RegisterRequestDTO request) {
         authService.registerStudent(request);
         return ResponseEntity.status(HttpStatus.OK).body(ReponseUtil.success());
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<ReponseUtil<LoginResponseDTO>> login(
+            @Valid @RequestBody LoginRequestDTO request,
+            HttpServletRequest httpServletRequest
+    ) {
+        return ResponseEntity.ok(ReponseUtil.success(authService.login(request, httpServletRequest)));
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<ReponseUtil<LoginResponseDTO>> refresh(
+            @Valid @RequestBody RefreshTokenRequestDTO request,
+            HttpServletRequest httpServletRequest
+    ) {
+        return ResponseEntity.ok(ReponseUtil.success(authService.refresh(request, httpServletRequest)));
     }
 }
