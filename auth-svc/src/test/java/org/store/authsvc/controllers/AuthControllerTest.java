@@ -4,7 +4,7 @@ import com.eduplatform.common.dtos.web.ReponseUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.store.authsvc.dtos.request.RegisterRequestDTO;
+import org.store.authsvc.dtos.request.authentication.RegisterRequestDTO;
 import org.store.authsvc.services.AuthService;
 
 import static org.assertj.core.api.Assertions.assertThat;

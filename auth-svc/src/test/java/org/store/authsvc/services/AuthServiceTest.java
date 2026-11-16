@@ -1,6 +1,6 @@
 package org.store.authsvc.services;
 
-import com.eduplatform.common.entites.UsersEntity;
+import org.store.authsvc.entites.UsersEntity;
 import com.eduplatform.common.exceptions.BaseException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,7 +8,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.store.authsvc.dtos.request.RegisterRequestDTO;
+import org.store.authsvc.dtos.request.authentication.RegisterRequestDTO;
 import org.store.authsvc.mappers.UserMapper;
 import org.store.authsvc.repositories.UserRepository;
 

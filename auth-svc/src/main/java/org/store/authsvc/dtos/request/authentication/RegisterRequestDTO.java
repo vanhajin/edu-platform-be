@@ -1,4 +1,4 @@
-package org.store.authsvc.dtos.request;
+package org.store.authsvc.dtos.request.authentication;
 
 import com.eduplatform.common.utils.enums.EnumRole;
 import com.eduplatform.common.utils.validation.CommonValid;

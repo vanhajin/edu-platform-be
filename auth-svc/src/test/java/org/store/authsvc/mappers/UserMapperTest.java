@@ -1,9 +1,9 @@
 package org.store.authsvc.mappers;
 
-import com.eduplatform.common.entites.UsersEntity;
+import org.store.authsvc.entites.UsersEntity;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
-import org.store.authsvc.dtos.request.RegisterRequestDTO;
+import org.store.authsvc.dtos.request.authentication.RegisterRequestDTO;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

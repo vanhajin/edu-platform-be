@@ -4,6 +4,7 @@ import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.store.authsvc.dtos.request.authentication.RegisterRequestDTO;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

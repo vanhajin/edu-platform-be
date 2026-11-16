@@ -1,9 +1,9 @@
 package org.store.authsvc.mappers;
 
-import com.eduplatform.common.entites.UsersEntity;
+import org.store.authsvc.entites.UsersEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.store.authsvc.dtos.request.RegisterRequestDTO;
+import org.store.authsvc.dtos.request.authentication.RegisterRequestDTO;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {

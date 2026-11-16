@@ -1,6 +1,8 @@
 package org.store.authsvc.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.store.authsvc.entites.UserSessionsEntity;
 
@@ -22,4 +24,14 @@ public interface UserSessionsRepository extends JpaRepository<UserSessionsEntity
     );
 
     Optional<UserSessionsEntity> findByUserIdAndDeviceId(String userId, String deviceId);
+
+    @Modifying
+    @Query(value = """
+            UPDATE user_sessions
+                        SET is_revoked = true,
+                            revoked_at = NOW()
+                        WHERE user_session_id = :sessionId
+                          AND is_revoked = false"""
+            , nativeQuery = true)
+    int revokeSession(String sessionId);
 }

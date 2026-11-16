@@ -1,10 +1,13 @@
 package org.store.authsvc.services;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
@@ -39,17 +42,34 @@ public class TokenService {
         this.refreshTokenExpirationDays = refreshTokenExpirationDays;
     }
 
-    public String generateAccessToken(String userId, String username, String role) {
+    public String generateAccessToken(String sessionId, String userId, String username, String role) {
         Date issuedAt = new Date();
         Date expiresAt = new Date(issuedAt.getTime() + accessTokenExpirationSeconds * 1000);
         return Jwts.builder()
                 .subject(userId)
+                .claim("session_id", sessionId)
                 .claim("username", username)
                 .claim("role", role)
                 .issuedAt(issuedAt)
                 .expiration(expiresAt)
                 .signWith(signingKey)
                 .compact();
+    }
+
+    public Claims verifyAccessToken(String accessToken) {
+        try {
+            return Jwts.parser()
+                    .verifyWith(signingKey)
+                    .build()
+                    .parseSignedClaims(accessToken)
+                    .getPayload();
+        } catch (RuntimeException exception) {
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED,
+                    "Access token is invalid or expired",
+                    exception
+            );
+        }
     }
 
     public String generateRefreshToken() {

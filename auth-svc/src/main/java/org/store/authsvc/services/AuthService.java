@@ -1,8 +1,9 @@
 package org.store.authsvc.services;
 
-import com.eduplatform.common.entites.UsersEntity;
+import org.store.authsvc.entites.UsersEntity;
 import com.eduplatform.common.exceptions.BaseException;
 import com.eduplatform.common.utils.enums.EnumRole;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,9 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.store.authsvc.dtos.persistence.IUserLoginDTO;
 import org.store.authsvc.dtos.persistence.UserSessionsDTO;
-import org.store.authsvc.dtos.request.LoginRequestDTO;
-import org.store.authsvc.dtos.request.RefreshTokenRequestDTO;
-import org.store.authsvc.dtos.request.RegisterRequestDTO;
+import org.store.authsvc.dtos.request.authentication.LoginRequestDTO;
+import org.store.authsvc.dtos.request.authentication.RefreshTokenRequestDTO;
+import org.store.authsvc.dtos.request.authentication.RegisterRequestDTO;
 import org.store.authsvc.dtos.response.LoginResponseDTO;
 import org.store.authsvc.dtos.response.UserInfoResponseDTO;
 import org.store.authsvc.entites.UserSessionsEntity;
@@ -72,12 +73,26 @@ public class AuthService {
         return createLoginResponse(user, oldSession.getDeviceId(), httpServletRequest);
     }
 
+    @Transactional
+    public void logout(String accessToken) {
+        Claims claims = tokenService.verifyAccessToken(accessToken);
+        String sessionId = claims.get("session_id", String.class);
+
+        if (sessionId == null || sessionId.isBlank()) {
+            throw new org.springframework.web.server.ResponseStatusException(
+                    org.springframework.http.HttpStatus.UNAUTHORIZED,
+                    "Access token does not contain session_id"
+            );
+        }
+
+        userSessionsRepository.revokeSession(sessionId);
+    }
+
     private LoginResponseDTO createLoginResponse(
             IUserLoginDTO user,
             String deviceId,
             HttpServletRequest httpServletRequest
     ) {
-        String accessToken = tokenService.generateAccessToken(user.getUserId(), user.getUsername(), user.getRole());
         String refreshToken = tokenService.generateRefreshToken();
         LocalDateTime refreshExpiresAt = tokenService.refreshTokenExpiresAt();
         LocalDateTime now = tokenService.currentTime();
@@ -97,6 +112,7 @@ public class AuthService {
                 .orElseGet(() -> userSessionsMap.toEntity(session));
         userSessionsRepository.save(sessionEntity);
 
+        String accessToken = tokenService.generateAccessToken(sessionEntity.getUserSessionId(), user.getUserId(), user.getUsername(), user.getRole());
         UserInfoResponseDTO userInfo = new UserInfoResponseDTO(
                 user.getUserId(),
                 user.getUsername(),

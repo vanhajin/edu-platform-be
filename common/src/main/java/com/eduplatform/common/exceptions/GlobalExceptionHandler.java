@@ -9,6 +9,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
 import jakarta.validation.ConstraintViolationException;
 
 @RestControllerAdvice
@@ -37,6 +38,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ReponseUtil<Void>> handleLogic(BaseException exception) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ReponseUtil.error(exception.getCode(), exception.getMessage(), ExceptionMessageUtil.getDetail(serviceName, exception)));
+    }
+
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<ReponseUtil<Void>> handleResponseStatus(ResponseStatusException exception) {
+        HttpStatus status = HttpStatus.valueOf(exception.getStatusCode().value());
+        return ResponseEntity.status(status)
+                .body(ReponseUtil.error(status.name(), exception.getReason(), ExceptionMessageUtil.getDetail(serviceName, exception)));
     }
 
     @ExceptionHandler(Exception.class)

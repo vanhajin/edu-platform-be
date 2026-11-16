@@ -2,5 +2,15 @@ spring:
   application:
     name: api-gateway
 
+auth:
+  jwt:
+    secret: ${JWT_SECRET}
+
+security:
+  public-post-paths:
+    - /auth/login
+    - /auth/register-student
+    - /auth/refresh
+
 server:
   port: 6868
